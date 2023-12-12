@@ -1,5 +1,5 @@
 # cloudflare-event-proxy
-Example Cloudflare Worker that serves as an event proxy for detecting and redacting PII
+Example Cloudflare Worker that serves as an event proxy for detecting and redacting sensitive data
 
 ### How this works
 1. Configure a Cloudflare Worker using this source code
