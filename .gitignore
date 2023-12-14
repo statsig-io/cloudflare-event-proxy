@@ -1,6 +1,9 @@
 # cloudflare config
 wrangler.toml
 
+# Mac stop it
+.DS_Store
+
 # Logs
 logs
 *.log
