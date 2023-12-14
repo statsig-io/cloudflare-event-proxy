@@ -104,9 +104,11 @@ async function scrubAndProxyEvents(request, env, path) {
       newBatch.push(event);
     }
 
-    // send these detections back to statsig to monitor [optional]
-    // uses the same STATSIG-API-KEY included on the event request headers
-    logRedactions(redactions, request.parsedHeaders['statsig-api-key']);
+    /**
+     * send these detections back to statsig to monitor [optional, gets noisy]
+     * uses the same STATSIG-API-KEY included on the event request headers
+     * logRedactions(redactions, request.parsedHeaders['statsig-api-key'])
+     */
 
     // console.log(`After: \n ${JSON.stringify(newBatch, null, 2)}`);
     request.jsonBody.events = newBatch;

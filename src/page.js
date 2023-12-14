@@ -30,7 +30,7 @@ module.exports = function (host='') {
             api: '${host}',
             loggingIntervalMillis: 0, 
             initTimeoutMs: 10000,
-            initCompletionCallback: function() {
+            initCompletionCallback: function() {              
               var [,successfulInit] = arguments;
               if(!successfulInit) alert('Invalid SDK key. Pass query string param ?key=CLIENT_SDK_KEY to test this demo');
             }
@@ -53,6 +53,13 @@ module.exports = function (host='') {
               <p>Override the api initialization option with your worker URL</p>
               <b>Testing this example</b>
               <p>Pass query string params <code>?key=CLIENT_SDK_KEY</code> to test this demo</p>
+              <b>Log an event</b>
+              <form onsubmit="statsig.logEvent(document.querySelector('#event_key').value);return false;">
+              <div class="input-group">
+                <input type="text" id="event_key" class="form-control" placeholder="Event Key" />
+                <button type="submit" class="btn border">Log</button>
+              </div>
+              </form>
             </div>
         </div>
       </div>        
