@@ -132,7 +132,7 @@ export default {
             
     // serves the demo webpage
     if (requestUrl.pathname === '/' && request.method === "GET") {
-      return new Response(staticPageHTML(fullHost, env.STATSIG_CLIENT_KEY), {
+      return new Response(staticPageHTML(fullHost), {
         headers: { "content-type": 'text/html; charset="UTF-8"' }
       });
     }

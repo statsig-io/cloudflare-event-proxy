@@ -1,4 +1,4 @@
-module.exports = function (host='', statsigDemoClientKey = '') { 
+module.exports = function (host='') { 
   return `<!DOCTYPE html>
   <head>
       <meta charset="UTF-8">
@@ -8,9 +8,16 @@ module.exports = function (host='', statsigDemoClientKey = '') {
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" integrity="sha512-uf06llspW44/LZpHzHT6qBOIVODjWtv4MxCricRxkzvopAlSWnTf6hpZTFxuuZcuNE9CBQhqE0Seu1CoRk84nQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">  
       <script src="https://cdn.jsdelivr.net/npm/statsig-js/build/statsig-prod-web-sdk.min.js"></script>
+      <script>
+      var urlParams = window.location.search.slice(1).replace(/^\\?/, '').split('&').reduce(function(params, entry) {
+        var [key, val] = entry.split('=');
+        params[key] = decodeURIComponent(val);
+        return params;
+      }, {});      
+      </script>
       <script data-codemirror="editor">   
       const initSS = async() => {    
-        await statsig.initialize('${statsigDemoClientKey}', {
+        await statsig.initialize(urlParams.key, {
               userID: 'another-user',
               custom: {
                 credit_card_no: '3712-402791-32998',
@@ -22,7 +29,11 @@ module.exports = function (host='', statsigDemoClientKey = '') {
             environment: { tier: 'production' }, 
             api: '${host}',
             loggingIntervalMillis: 0, 
-            initTimeoutMs: 10000
+            initTimeoutMs: 10000,
+            initCompletionCallback: function() {
+              var [,successfulInit] = arguments;
+              if(!successfulInit) alert('Invalid SDK key. Pass query string param ?key=CLIENT_SDK_KEY to test this demo');
+            }
           }
         );              
       };
@@ -40,6 +51,8 @@ module.exports = function (host='', statsigDemoClientKey = '') {
             <div class="col-6">
               <b>Sample Client Code</b>
               <p>Override the api initialization option with your worker URL</p>
+              <b>Testing this example</b>
+              <p>Pass query string params <code>?key=CLIENT_SDK_KEY</code> to test this demo</p>
             </div>
         </div>
       </div>        
