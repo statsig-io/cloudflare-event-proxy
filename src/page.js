@@ -27,7 +27,7 @@ module.exports = function (host='') {
               }
           },{          
             environment: { tier: 'production' }, 
-            api: '${host}',
+            api: '${host}/v1',
             loggingIntervalMillis: 0, 
             initTimeoutMs: 10000,
             initCompletionCallback: function() {              
